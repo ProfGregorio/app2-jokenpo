@@ -21,12 +21,11 @@ String pathImg="imagens/padrao.png";
 class _JogoState extends State<Jogo> {
   //String resultado = "Você perdeu :(";
   String escolhaJogador = "Escolha uma opção abaixo!";
-
-
   String resultado = "....";
 
   // 1. Função que será executada quando o jogador clicar em uma imagem
   void _opcaoSelecionada(String escolhaUsuario) {
+    qtdJogos+=1;
     var numeroSorteado = Random().nextInt(_imgAleatoria.length);
     print(numeroSorteado);
 
@@ -43,15 +42,19 @@ class _JogoState extends State<Jogo> {
       }else if(escolhaUsuario.toLowerCase()=="pedra"){
         if(_imgAleatoria[numeroSorteado].toLowerCase()=="tesoura"){
           resultado = "Você perdeu para o app:(";
+          vitApp+=1;
         }else{
           resultado = "Você ganhou do app :)";
+          vitJog+=1;
         }
       }
       else if(escolhaUsuario.toLowerCase()=="papel"){
         if(_imgAleatoria[numeroSorteado].toLowerCase()=="pedra"){
           resultado = "Você perdeu para o app:(";
+          vitApp+=1;
         }else{
           resultado = "Você ganhou do app :)";
+          vitJog+=1;
         }
 
       }
@@ -59,13 +62,26 @@ class _JogoState extends State<Jogo> {
       else{
         if(_imgAleatoria[numeroSorteado].toLowerCase()=="pedra"){
           resultado = "Você perdeu para o app:(";
+          vitApp+=1;
         }else{
           resultado = "Você ganhou do app :)";
+          vitJog+=1;
         }
       }
     });
   }
 
+  void _recomecarJogo(){
+    setState(() {
+      escolhaJogador = "Escolha uma opção abaixo!";
+      resultado = "....";
+      pathImg = "imagens/padrao.png";
+      vitApp = 0;
+      vitJog = 0;
+      qtdJogos = 0;
+    });
+
+  }
   @override
     Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +104,6 @@ class _JogoState extends State<Jogo> {
                   ),
                 ),
             ),
-
             //imagem
             Image.asset(pathImg, height: 120),
             //text resultado
@@ -138,6 +153,29 @@ class _JogoState extends State<Jogo> {
                 ),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.only(top: 200, bottom: 16),
+              child:
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black87,
+                  backgroundColor: Colors.greenAccent,
+                  minimumSize: Size(88, 36),
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(2)),
+                  ),
+                ),
+                onPressed: (){
+                  _recomecarJogo();
+
+                  print("Clicado");
+                },
+
+                child: Text("RECOMEÇAR O JOGO"),
+              ),
+            ),
+
           ],
         ),
       bottomNavigationBar: BottomAppBar(
@@ -147,9 +185,9 @@ class _JogoState extends State<Jogo> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text("APP "),
-                  Text("VS."),
-                  Text("VOCÊ "),
+                  Text("APP -> ${vitApp}"),
+                  Text("VOCÊ -> ${vitApp}"),
+                  Text("TOTAL -> ${qtdJogos}")
                 ],
               )
           )
