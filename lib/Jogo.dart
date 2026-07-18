@@ -8,6 +8,9 @@ class Jogo extends StatefulWidget {
   @override
   State<Jogo> createState() => _JogoState();
 }
+int vitApp = 0;
+int vitJog = 0;
+int qtdJogos = 0;
 List _imgAleatoria = [
   "pedra",
   "papel",
@@ -71,13 +74,36 @@ class _JogoState extends State<Jogo> {
           title: Text('Jokenpo', textAlign: TextAlign.center)
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             //text
-            Text("Escolha do App:"),
+            Padding(
+                padding: EdgeInsets.only(top: 32, bottom: 16),
+                child: Text(
+                  "Escolha do App:",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+            ),
+
             //imagem
             Image.asset(pathImg, height: 120),
             //text resultado
-            Text(escolhaJogador),
+            //Text(escolhaJogador),
+            Padding(
+              padding: EdgeInsets.only(top: 32, bottom: 32),
+              child: Text(
+                escolhaJogador,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
             //Linha 3 Imagens na horizontal
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -101,10 +127,35 @@ class _JogoState extends State<Jogo> {
                 ),
               ],
             ),
-            Text(resultado),
+            Padding(
+              padding: EdgeInsets.only(top: 32, bottom: 16),
+              child: Text(
+                resultado,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
           ],
         ),
-      );
+      bottomNavigationBar: BottomAppBar(
+          color: Colors.amber,
+          child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text("APP "),
+                  Text("VS."),
+                  Text("VOCÊ "),
+                ],
+              )
+          )
+
+      ),
+    );
   }
 }
 
